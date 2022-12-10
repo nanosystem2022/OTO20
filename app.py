@@ -1,8 +1,8 @@
 import pandas
-from flask import flask , redirect , url_for ,render_template , request , flash
+from flask import Flask , redirect , url_for ,render_template , request , flash
 import requests
 from flask import send_file
-app = flask(__name__)
+app = Flask(__name__)
 
 
 @app.route('/')
