@@ -1,18 +1,13 @@
-import pandas
-from flask import Flask , redirect , url_for ,render_template , request , flash
-import requests
-from flask import send_file
-app = Flask(__name__)
+#https://bama.ir/api/car/search?brand=samand&image=1
 
 
-@app.route('/')
-def main():
-    mypages = [f'https://api.divar.ir/v8/web-search/ardabil/car?has-photo=fals&user_type=peronal&non-negotiable=true&page=1']
-    for mp in mypages:
-        url = requests.get(mp)
-        x = url.json()
-    return render_template('index.html' , data = x)
+import pandas as pd
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
+import requests_html
+session = requests_html.HTMLSession()
+url = session.get('https://bama.ir/cad/api/filter/all?mileageFrom=1&region=ardebil%2Cardabil&pageIndex=1')
+js = url.json()
+for i in js['data']['prices']['items']:
+    # print(f'{i["title"]} ---- {i["modelyear"]} ---- {i["price"]}')
+    dic = {'title' :i["title"] , 'year':i["modelyear"]  , 'price' :i["price"] }
+    print(dic)
